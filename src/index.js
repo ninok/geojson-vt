@@ -1,4 +1,3 @@
-
 import convert from './convert';     // GeoJSON conversion and preprocessing
 import clip from './clip';           // stripe clipping algorithm
 import wrap from './wrap';           // date line processing
