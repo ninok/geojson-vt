@@ -1,4 +1,3 @@
-
 import convert from './convert';     // GeoJSON conversion and preprocessing
 import clip from './clip';           // stripe clipping algorithm
 import wrap from './wrap';           // date line processing
@@ -154,6 +153,10 @@ GeoJSONVT.prototype.splitTile = function (features, z, x, y, cz, cx, cy) {
 };
 
 GeoJSONVT.prototype.getTile = function (z, x, y) {
+    z = +z;
+    x = +x;
+    y = +y;
+
     const options = this.options;
     const {extent, debug} = options;
 

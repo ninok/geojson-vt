@@ -18,6 +18,7 @@ test('getTile: us-states.json', (t) => {
     const index = geojsonvt(getJSON('us-states.json'), {debug: 2});
 
     t.same(index.getTile(7, 37, 48).features, getJSON('us-states-z7-37-48.json'), 'z7-37-48');
+    t.same(index.getTile('7', '37', '48').features, getJSON('us-states-z7-37-48.json'), 'z, x, y as strings');
 
     t.same(index.getTile(9, 148, 192).features, square, 'z9-148-192 (clipped square)');
     // t.same(index.getTile(11, 592, 768).features, square, 'z11-592-768 (clipped square)');
@@ -42,7 +43,7 @@ test('getTile: unbuffered tile left/right edges', (t) => {
     });
 
     t.same(index.getTile(2, 1, 1), null);
-    t.same(index.getTile(2, 2, 1).features, [{geometry: [[[0, 0], [0, 4096]]], type: 2, tags: null}]);
+    t.same(index.getTile(2, 2, 1).features, [{geometry: [[[0, 0, 0], [0, 4096, 0]]], type: 2, tags: null}]);
     t.end();
 });
 
@@ -54,7 +55,7 @@ test('getTile: unbuffered tile top/bottom edges', (t) => {
         buffer: 0
     });
 
-    t.same(index.getTile(2, 1, 0).features, [{geometry: [[[0, 4096], [4096, 4096]]], type: 2, tags: null}]);
+    t.same(index.getTile(2, 1, 0).features, [{geometry: [[[0, 4096, 0], [4096, 4096, 0]]], type: 2, tags: null}]);
     t.same(index.getTile(2, 1, 1).features, []);
     t.end();
 });
@@ -74,7 +75,7 @@ test('getTile: polygon clipping on the boundary', (t) => {
     });
 
     t.same(index.getTile(5, 19, 9).features, [{
-        geometry: [[[3072, 3072], [5120, 3072], [5120, 5120], [3072, 5120], [3072, 3072]]],
+        geometry: [[[3072, 3072, 0], [5120, 3072, 0], [5120, 5120, 0], [3072, 5120, 0], [3072, 3072, 0]]],
         type: 3,
         tags: null
     }]);
